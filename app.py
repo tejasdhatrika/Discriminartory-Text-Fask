@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 import tensorflow as tf
 import pickle
 import numpy as np
@@ -19,6 +19,10 @@ def preprocess_text(text):
     sequences = tokenizer.texts_to_sequences([text])
     padded_sequences = tf.keras.preprocessing.sequence.pad_sequences(sequences, maxlen=100)
     return padded_sequences
+
+@app.route('/')
+def home():
+    return render_template('index.html')
 
 @app.route('/predict', methods=['POST'])
 def predict():
